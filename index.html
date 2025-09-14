@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pamela</title>
+<title>Pamela ❤️</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
-  background-color:#1F1515;
+  background:#1F1515;
   color:#fff;
   font-family:'Roboto',sans-serif;
   overflow-y:auto;
@@ -18,7 +18,7 @@ body{
 }
 .container{
   max-width:700px;
-  margin:0 auto;
+  margin:50px auto;
   position:relative;
   z-index:10;
 }
@@ -32,6 +32,7 @@ h1{
   color:#FF6B6B;
   font-weight:700;
   margin-bottom:20px;
+  text-align:center;
 }
 p{
   font-size:1.3em;
@@ -99,6 +100,7 @@ p{
 
 <div class="buttons">
   <button id="playPause">🎵</button>
+  <button id="mute">🔇</button>
   <button id="themeSwitch">🌙</button>
 </div>
 
@@ -122,122 +124,68 @@ p{
 </audio>
 
 <script>
-// Elementos principais
+// Elementos
 const music = document.getElementById('music');
 const playBtn = document.getElementById('playPause');
+const muteBtn = document.getElementById('mute');
 const themeBtn = document.getElementById('themeSwitch');
-let darkTheme = true;
+let darkTheme=true;
 
-// Função para iniciar música (PC e mobile)
-function startMusic() {
-  music.play().catch(() => console.log('Toque no botão para iniciar a música'));
-  playBtn.textContent = '⏸️';
-}
+// Música
+function startMusic(){music.play().catch(()=>console.log('Clique para tocar'));playBtn.textContent='⏸️';}
+playBtn.addEventListener('click',()=>{if(music.paused) startMusic(); else{music.pause();playBtn.textContent='🎵';}});
+muteBtn.addEventListener('click',()=>{music.muted=!music.muted; muteBtn.textContent=music.muted?'🔊':'🔇';});
 
-// Play/pause
-playBtn.addEventListener('click', () => {
-  if (music.paused) startMusic();
-  else { music.pause(); playBtn.textContent='🎵'; }
-});
-
-// Primeiro toque no mobile inicia música
-document.addEventListener('touchstart',()=>{if(music.paused) startMusic();},{once:true});
-
-// Troca de tema
+// Tema
 themeBtn.addEventListener('click',()=>{
-  if(darkTheme){
-    document.body.style.backgroundColor='#FFE4E1';
-    document.body.style.color='#1F1515';
-    darkTheme=false;
-  } else{
-    document.body.style.backgroundColor='#1F1515';
-    document.body.style.color='#FFFFFF';
-    darkTheme=true;
-  }
+  if(darkTheme){document.body.style.background='#FFE4E1'; document.body.style.color='#1F1515'; darkTheme=false;}
+  else{document.body.style.background='#1F1515'; document.body.style.color='#fff'; darkTheme=true;}
 });
 
-// Parágrafos aparecem e brilham
+// Animação do texto
 const elements = document.querySelectorAll('.container h1,.container p');
-let delay=700;
-elements.forEach((el,index)=>{
-  setTimeout(()=>{
-    el.style.opacity=1;
-    el.style.transform='translateY(0)';
-  },delay*index);
-});
+elements.forEach((el,i)=>{setTimeout(()=>{el.style.opacity=1; el.style.transform='translateY(0)';},i*700);});
 
-// Corações "explosivos" conforme a música
+// Corações e partículas
 function spawnHeart(x,y,size){
-  const heart = document.createElement('div');
-  heart.classList.add('floating-heart');
-  heart.innerText='❤️';
-  heart.style.left = x + (Math.random()*50-25) + 'px';
-  heart.style.top = y + (Math.random()*50-25) + 'px';
-  heart.style.fontSize = size + 'px';
-  heart.style.animationDuration = (Math.random()*1.5 + 0.5)+'s';
-  heart.style.opacity = Math.random()*0.8+0.2;
+  const heart=document.createElement('div'); heart.className='floating-heart';
+  heart.innerText='❤️'; heart.style.left=x+(Math.random()*50-25)+'px';
+  heart.style.top=y+(Math.random()*50-25)+'px'; heart.style.fontSize=size+'px';
+  heart.style.animationDuration=(Math.random()*1.5+0.5)+'s';
+  heart.style.opacity=Math.random()*0.8+0.2;
   document.body.appendChild(heart);
   setTimeout(()=>heart.remove(),2000);
 }
-document.addEventListener('mousemove', e=>spawnHeart(e.clientX,e.clientY,30+Math.random()*30));
-document.addEventListener('touchmove', e=>spawnHeart(e.touches[0].clientX,e.touches[0].clientY,30+Math.random()*30));
+document.addEventListener('mousemove',e=>spawnHeart(e.clientX,e.clientY,30+Math.random()*30));
+document.addEventListener('touchmove',e=>spawnHeart(e.touches[0].clientX,e.touches[0].clientY,30+Math.random()*30));
 
-// Partículas "explosivas"
+// Partículas
 const particles=[];
 for(let i=0;i<150;i++){
-  const p = document.createElement('div');
-  p.classList.add('particle');
-  p.style.left = Math.random()*window.innerWidth+'px';
-  p.style.top = Math.random()*window.innerHeight+'px';
-  document.body.appendChild(p);
-  particles.push(p);
+  const p=document.createElement('div'); p.className='particle';
+  p.style.left=Math.random()*window.innerWidth+'px';
+  p.style.top=Math.random()*window.innerHeight+'px';
+  document.body.appendChild(p); particles.push(p);
 }
 
 // Web Audio API
-const audioCtx = new(window.AudioContext||window.webkitAudioContext)();
-const analyser = audioCtx.createAnalyser();
-let source;
-
+const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+const analyser=audioCtx.createAnalyser(); let source;
 music.addEventListener('play',()=>{
-  if(!source){
-    source=audioCtx.createMediaElementSource(music);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    analyser.fftSize=128;
-  }
+  if(!source){source=audioCtx.createMediaElementSource(music); source.connect(analyser); analyser.connect(audioCtx.destination); analyser.fftSize=128;}
 });
-
 function animate(){
   requestAnimationFrame(animate);
   if(!music.paused){
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    const dataArray=new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(dataArray);
-    const avg = dataArray.reduce((a,b)=>a+b)/dataArray.length;
-    const hue = Math.floor(avg*2);
+    const avg=dataArray.reduce((a,b)=>a+b)/dataArray.length;
+    const hue=Math.floor(avg*2);
 
-    // Fundo dinâmico
-    document.body.style.backgroundColor = darkTheme ? `hsl(${hue},40%,12%)`:`hsl(${hue},40%,90%)`;
-
-    // Texto vibra e brilha intensamente
-    elements.forEach(el=>{
-      el.style.textShadow = `0 0 ${avg/1.5}px #FF6B6B`;
-      el.style.transform = `translateY(${Math.sin(Date.now()/50)*avg/40}px)`;
-    });
-
-    // Partículas pulando e espalhando
-    particles.forEach(p=>{
-      const size = Math.random()*4 + avg/50;
-      p.style.width = size+'px';
-      p.style.height = size+'px';
-      p.style.backgroundColor = `hsl(${hue},70%,60%)`;
-      p.style.opacity = Math.random()*0.6+0.2;
-      p.style.transform = `translateY(${Math.sin(Date.now()/50)*avg/30}px) translateX(${Math.sin(Date.now()/70)*avg/50}px)`;
-    });
-
-    // Spawn de corações explosivos conforme batida
-    if(avg>100 && Math.random()<0.3){
-      spawnHeart(Math.random()*window.innerWidth, Math.random()*window.innerHeight, 40+Math.random()*40);
-    }
+    document.body.style.background=darkTheme?`hsl(${hue},40%,12%)`:`hsl(${hue},40%,90%)`;
+    elements.forEach(el=>{el.style.textShadow=`0 0 ${avg/1.5}px #FF6B6B`; el.style.transform=`translateY(${Math.sin(Date.now()/50)*avg/40}px)`;});
+    particles.forEach(p=>{const size=Math.random()*4+avg/50; p.style.width=size+'px'; p.style.height=size+'px'; p.style.background=`hsl(${hue},70%,60%)`; p.style.opacity=Math.random()*0.6+0.2; p.style.transform=`translateY(${Math.sin(Date.now()/50)*avg/30}px) translateX(${Math.sin(Date.now()/70)*avg/50}px)`;});
+    if(avg>100 && Math.random()<0.3){spawnHeart(Math.random()*window.innerWidth,Math.random()*window.innerHeight,40+Math.random()*40);}
   }
 }
 animate();
