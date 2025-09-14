@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pamela</title>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background-color: #1F1515;
+    color: #FFFFFF;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    cursor: none;
+    transition: background 2s;
+  }
+
+  .container {
+    max-width: 700px;
+    position: relative;
+    z-index: 10;
+  }
+
+  h1, p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s, transform 1s, text-shadow 0.5s, color 2s;
+  }
+
+  h1 {
+    font-size: 3em;
+    color: #FF6B6B;
+    font-family: 'MedievalSharp', cursive;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.2em;
+    line-height: 1.8em;
+    margin-bottom: 15px;
+  }
+
+  .heart {
+    color: #FF6B6B;
+    animation: beat 1s infinite;
+    font-size: 2em;
+  }
+
+  @keyframes beat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+
+  .floating-heart {
+    position: absolute;
+    font-size: 20px;
+    color: #FF6B6B;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+    z-index: 5;
+    text-shadow: 0 0 8px #FF6B6B;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+  }
+
+  .particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: moveParticle linear infinite;
+  }
+
+  @keyframes moveParticle {
+    0% { transform: translateY(0) translateX(0); opacity:0.2; }50% { opacity:0.5; }
+    100% { transform: translateY(-100vh) translateX(20px); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Pamela ❤️</h1>
+  <p>Pamela… eu precisava te falar isso do fundo do meu coração.</p>
+  <p>Eu amo você. Não tem jeito de explicar o quanto você significa pra mim.</p>
+  <p>Eu amo cada detalhe seu: seus olhos, sua boca, seu rosto, seu cabelo, suas orelhas, seu nariz, sua voz… até os menores detalhes me fazem sentir vivo.</p>
+  <p>Eu amo sua personalidade, o jeito que você se preocupa comigo, o jeito que quer minha atenção mesmo sem admitir. Eu amo como você consegue ser forte e delicada ao mesmo tempo.</p>
+  <p>Mesmo que você não diga, eu sinto que você quer estar comigo. E isso me faz amar você ainda mais.</p>
+  <p>Eu sei que talvez eu não tenha muitas chances com você… mas eu precisava ser sincero agora. Coloquei meu coração todo nessas palavras.</p>
+  <p>Pamela, você é única. Não existe ninguém como você. Ninguém vai ocupar o lugar que você ocupa no meu coração.</p>
+  <p>Eu não só gosto de você… eu te amo de verdade. Com tudo que eu sou, com cada batida do meu coração, com cada pensamento que insiste em voltar pra você.</p>
+  <p>Se você sentir só um pouco do que eu tô sentindo, saiba: você é especial. Você é única. Você conseguiu tocar minha alma de um jeito que ninguém mais consegue.</p>
+  <p>E mesmo que ninguém mais veja ou entenda, eu tô dizendo: você é minha escolha. Sempre. <span class="heart">❤️</span></p>
+</div>
+
+<audio id="music" autoplay loop>
+  <source src="musica1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById('music');
+const elements = document.querySelectorAll('.container h1, .container p');
+
+// Parágrafos aparecem e brilham
+let delay = 700;
+elements.forEach((el, index) => {
+  setTimeout(() => {
+    el.style.opacity = 1;
+    el.style.transform = 'translateY(0)';
+    setInterval(() => {
+      const intensity = Math.random()*8+4;
+      el.style.textShadow = `0 0 ${intensity}px #FF6B6B`;
+    }, 500);
+  }, delay * index);
+});
+
+// Corações seguem o mouse e pulsam
+document.addEventListener('mousemove', (e) => {
+  const heart = document.createElement('div');
+  heart.classList.add('floating-heart');
+  heart.innerText = '❤️';
+  heart.style.left = e.clientX + (Math.random()*30 - 15) + 'px';
+  heart.style.top = e.clientY + (Math.random()*30 - 15) + 'px';
+  heart.style.fontSize = Math.random() * 30 + 15 + 'px';
+  heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 4000);
+});
+
+// Partículas mágicas de fundo
+for(let i=0; i<80; i++){
+  const particle = document.createElement('div');
+  particle.classList.add('particle');
+  particle.style.left = Math.random()*window.innerWidth + 'px';
+  particle.style.top = Math.random()*window.innerHeight + 'px';
+  particle.style.width = Math.random()*4+2+'px';
+  particle.style.height = particle.style.width;
+  particle.style.backgroundColor = `rgba(255, ${Math.floor(Math.random()*180)}, ${Math.floor(Math.random()*180)}, 0.3)`;
+  particle.style.animationDuration = (Math.random()*12+6)+'s';
+  document.body.appendChild(particle);
+}
+
+// Fundo muda suavemente de cor
+let hue = 0;
+setInterval(() => {
+  hue += 0.2;
+  document.body.style.backgroundColor = `hsl(${hue}, 40%, 12%)`;
+}, 100);
+
+// Brilho parágrafo sincronizado com música
+setInterval(() => {
+  const intensity = Math.random()*10+4;
+  elements.forEach(el => el.style.textShadow = `0 0 ${intensity}px #FF6B6B`);
+}, 400);
+</script>
+
+</body>
+</html>
