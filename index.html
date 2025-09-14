@@ -1,195 +1,197 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pamela ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  background:#1F1515;
-  color:#fff;
-  font-family:'Roboto',sans-serif;
-  overflow-y:auto;
-  scroll-behavior:smooth;
-  padding:20px;
-  transition: background 1s,color 1s;
-}
-.container{
-  max-width:700px;
-  margin:50px auto;
-  position:relative;
-  z-index:10;
-}
-h1,p{
-  opacity:0;
-  transform:translateY(20px);
-  transition:opacity 1s,transform 1s,text-shadow 0.2s,color 0.5s;
-}
-h1{
-  font-size:3em;
-  color:#FF6B6B;
-  font-weight:700;
-  margin-bottom:20px;
-  text-align:center;
-}
-p{
-  font-size:1.3em;
-  line-height:2em;
-  margin-bottom:15px;
-}
-.heart{
-  color:#FF6B6B;
-  animation:beat 1s infinite;
-  font-size:2em;
-}
-@keyframes beat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.3);}
-}
-.floating-heart{
-  position:absolute;
-  font-size:20px;
-  color:#FF6B6B;
-  pointer-events:none;
-  z-index:5;
-  text-shadow:0 0 10px #FF6B6B;
-}
-.particle{
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  opacity:0.2;
-  pointer-events:none;
-}
-.buttons{
-  position:fixed;
-  top:10px;
-  right:10px;
-  z-index:20;
-  display:flex;
-  gap:10px;
-}
-.buttons button{
-  font-size:1.5em;
-  padding:5px 10px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background-color:#FF6B6B;
-  color:#fff;
-  transition:transform 0.2s;
-}
-.buttons button:hover{
-  transform:scale(1.2);
-}
-@media(max-width:768px){
-  h1{font-size:2.5em;}
-  p{font-size:1.1em;line-height:1.8em;}
-  .buttons button{font-size:1.2em;padding:4px 8px;}
-}
-@media(max-width:480px){
-  h1{font-size:2em;}
-  p{font-size:1em;line-height:1.6em;}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Mamãe ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Indie+Flower&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #4B0082, #800080);
+      color: white;
+      font-family: 'Indie Flower', cursive;
+      text-align: center;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
+    }
+    body.dark { background: black; color: white; }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      margin-top: 20px;
+    }
+    .reasons {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 700px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px white;
+    }
+    .reasons h2 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+    .reasons ol {
+      text-align: left;
+      font-size: 1.2em;
+      padding: 0 20px;
+    }
+    .hearts, .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .heart, .star {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+      animation: float 10s infinite ease-in-out;
+    }
+    .heart {
+      background-color: pink;
+      clip-path: polygon(50% 0%, 100% 30%, 80% 100%, 50% 80%, 20% 100%, 0% 30%);
+    }
+    .star {
+      background: yellow;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); }
+      100% { transform: translateY(-10vh) translateX(30px); }
+    }
+    #controls {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+    }
+    .music-button {
+      padding: 10px 15px;
+      background: white;
+      color: #800080;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    #musica-info {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      color: white;
+      font-size: 0.9em;
+      z-index: 10;
+    }
+    a.carta-link, .contador {
+      display: block;
+      margin: 40px auto;
+      color: white;
+      font-size: 1.2em;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    .depoimentos {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 700px;
+      border-radius: 15px;
+      font-style: italic;
+    }
+  </style>
 </head>
-<body>
+<body onclick="criaCora(event)">
+  <audio id="musica" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
 
-<div class="buttons">
-  <button id="playPause">🎵</button>
-  <button id="mute">🔇</button>
-  <button id="themeSwitch">🌙</button>
-</div>
+  <div id="controls">
+    <button id="botao-musica" class="music-button" onclick="toggleMusica()">▶️ Tocar Música</button>
+    <button class="music-button" onclick="document.body.classList.toggle('dark')">🌓 Alternar Tema</button>
+  </div>
 
-<div class="container">
-<h1>Pamela ❤️</h1>
-<p>Pamela… eu precisava te falar isso do fundo do meu coração.</p>
-<p>Eu amo você. Não tem jeito de explicar o quanto você significa pra mim.</p>
-<p>Eu amo cada detalhe seu: seus olhos, sua boca, seu rosto, seu cabelo, suas orelhas, seu nariz, sua voz… até os menores detalhes me fazem sentir vivo.</p>
-<p>Eu amo sua personalidade, o jeito que você se preocupa comigo, o jeito que quer minha atenção mesmo sem admitir. Eu amo como você consegue ser forte e delicada ao mesmo tempo.</p>
-<p>Mesmo que você não diga, eu sinto que você quer estar comigo. E isso me faz amar você ainda mais.</p>
-<p>Eu sei que talvez eu não tenha muitas chances com você… mas eu precisava ser sincero agora. Coloquei meu coração todo nessas palavras.</p>
-<p>Pamela, você é única. Não existe ninguém como você. Ninguém vai ocupar o lugar que você ocupa no meu coração.</p>
-<p>Eu não só gosto de você… eu te amo de verdade. Com tudo que eu sou, com cada batida do meu coração, com cada pensamento que insiste em voltar pra você.</p>
-<p>Se você sentir só um pouco do que eu tô sentindo, saiba: você é especial. Você é única. Você conseguiu tocar minha alma de um jeito que ninguém mais consegue.</p>
-<p>E mesmo que ninguém mais veja ou entenda, eu tô dizendo: você é minha escolha. Sempre. <span class="heart">❤️</span></p>
-<p style="margin-top:50px; font-size:1.4em;">Pamela, quando você ler isso, quero que sinta meu abraço, mesmo que eu não esteja perto. Quero que saiba que cada palavra veio direto do meu coração, e cada batida do meu coração pensa em você. Você é minha luz, minha inspiração, minha escolha, minha razão de sorrir. Eu te amo de um jeito que não cabe em palavras, mas tentei colocar aqui tudo que eu sinto. Nunca se esqueça: você é especial, única e ninguém nunca vai ocupar o seu lugar dentro de mim. ❤️</p>
-</div>
+  <div id="musica-info">📻 Tocando: Sua música especial</div>
 
-<audio id="music" loop>
-  <source src="musica1.mp3" type="audio/mpeg">
-</audio>
+  <h1>Minha Mamãe ❤️</h1>
 
-<script>
-// Elementos
-const music = document.getElementById('music');
-const playBtn = document.getElementById('playPause');
-const muteBtn = document.getElementById('mute');
-const themeBtn = document.getElementById('themeSwitch');
-let darkTheme=true;
+  <div class="reasons">
+    <h2>20 Coisas que amo em você</h2>
+    <ol>
+      <li>Como me cuida</li><li>Seu jeito de me dar ordens</li><li>Seu carinho</li><li>Como me faz rir</li><li>Seu abraço</li>
+      <li>Sua paciência comigo</li><li>Seu toque</li><li>Seu olhar</li><li>Seu senso de humor</li><li>Como me ama</li>
+      <li>Como me protege</li><li>Seu jeito divertido</li><li>Seu jeito único</li><li>Como me faz sentir especial</li><li>Como me mima</li>
+      <li>Como me faz obedecer sorrindo</li><li>Seu sorriso</li><li>Como transforma meu dia</li><li>Seu jeito brincalhão</li><li>Porque é você!</li>
+    </ol>
+  </div>
 
-// Música
-function startMusic(){music.play().catch(()=>console.log('Clique para tocar'));playBtn.textContent='⏸️';}
-playBtn.addEventListener('click',()=>{if(music.paused) startMusic(); else{music.pause();playBtn.textContent='🎵';}});
-muteBtn.addEventListener('click',()=>{music.muted=!music.muted; muteBtn.textContent=music.muted?'🔊':'🔇';});
+  <a href="carta.html" class="carta-link">💌 Leia minha carta para você</a>
 
-// Tema
-themeBtn.addEventListener('click',()=>{
-  if(darkTheme){document.body.style.background='#FFE4E1'; document.body.style.color='#1F1515'; darkTheme=false;}
-  else{document.body.style.background='#1F1515'; document.body.style.color='#fff'; darkTheme=true;}
-});
+  <div class="contador" id="contador"></div>
 
-// Animação do texto
-const elements = document.querySelectorAll('.container h1,.container p');
-elements.forEach((el,i)=>{setTimeout(()=>{el.style.opacity=1; el.style.transform='translateY(0)';},i*700);});
+  <div class="depoimentos">
+    “Você sempre me faz sentir amado e cuidado.”<br>
+    “Mesmo com suas ordens, eu amo cada momento com você.”<br>
+    “Desde que nos conhecemos, minha vida mudou para melhor.”<br>
+    “Três meses de amor intenso e especial ❤️”
+  </div>
 
-// Corações e partículas
-function spawnHeart(x,y,size){
-  const heart=document.createElement('div'); heart.className='floating-heart';
-  heart.innerText='❤️'; heart.style.left=x+(Math.random()*50-25)+'px';
-  heart.style.top=y+(Math.random()*50-25)+'px'; heart.style.fontSize=size+'px';
-  heart.style.animationDuration=(Math.random()*1.5+0.5)+'s';
-  heart.style.opacity=Math.random()*0.8+0.2;
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),2000);
-}
-document.addEventListener('mousemove',e=>spawnHeart(e.clientX,e.clientY,30+Math.random()*30));
-document.addEventListener('touchmove',e=>spawnHeart(e.touches[0].clientX,e.touches[0].clientY,30+Math.random()*30));
+  <div class="hearts"></div>
+  <div class="stars"></div>
 
-// Partículas
-const particles=[];
-for(let i=0;i<150;i++){
-  const p=document.createElement('div'); p.className='particle';
-  p.style.left=Math.random()*window.innerWidth+'px';
-  p.style.top=Math.random()*window.innerHeight+'px';
-  document.body.appendChild(p); particles.push(p);
-}
+  <script>
+    const audio = document.getElementById('musica');
+    const botao = document.getElementById('botao-musica');
 
-// Web Audio API
-const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-const analyser=audioCtx.createAnalyser(); let source;
-music.addEventListener('play',()=>{
-  if(!source){source=audioCtx.createMediaElementSource(music); source.connect(analyser); analyser.connect(audioCtx.destination); analyser.fftSize=128;}
-});
-function animate(){
-  requestAnimationFrame(animate);
-  if(!music.paused){
-    const dataArray=new Uint8Array(analyser.frequencyBinCount);
-    analyser.getByteFrequencyData(dataArray);
-    const avg=dataArray.reduce((a,b)=>a+b)/dataArray.length;
-    const hue=Math.floor(avg*2);
+    function toggleMusica() {
+      if (audio.paused) {
+        audio.play();
+        botao.textContent = '⏸️ Pausar Música';
+      } else {
+        audio.pause();
+        botao.textContent = '▶️ Tocar Música';
+      }
+    }
 
-    document.body.style.background=darkTheme?`hsl(${hue},40%,12%)`:`hsl(${hue},40%,90%)`;
-    elements.forEach(el=>{el.style.textShadow=`0 0 ${avg/1.5}px #FF6B6B`; el.style.transform=`translateY(${Math.sin(Date.now()/50)*avg/40}px)`;});
-    particles.forEach(p=>{const size=Math.random()*4+avg/50; p.style.width=size+'px'; p.style.height=size+'px'; p.style.background=`hsl(${hue},70%,60%)`; p.style.opacity=Math.random()*0.6+0.2; p.style.transform=`translateY(${Math.sin(Date.now()/50)*avg/30}px) translateX(${Math.sin(Date.now()/70)*avg/50}px)`;});
-    if(avg>100 && Math.random()<0.3){spawnHeart(Math.random()*window.innerWidth,Math.random()*window.innerHeight,40+Math.random()*40);}
-  }
-}
-animate();
-</script>
+    function criaCora(event) {
+      const cora = document.createElement('div');
+      cora.classList.add('heart');
+      cora.style.left = event.clientX + 'px';
+      cora.style.top = event.clientY + 'px';
+      document.body.appendChild(cora);
+      setTimeout(() => cora.remove(), 1000);
+    }
 
+    function addEstrelas() {
+      for (let i = 0; i < 40; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDuration = 5 + Math.random() * 5 + 's';
+        document.querySelector('.stars').appendChild(star);
+      }
+    }
+    addEstrelas();
+
+    const inicio = new Date('2025-06-14'); // Data do início do relacionamento (3 meses atrás)
+    const hoje = new Date();
+    const dias = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
+    document.getElementById('contador').textContent = `📆 Estamos juntos há ${dias} dias de puro amor ❤️`;
+  </script>
 </body>
 </html>
