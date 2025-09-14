@@ -4,17 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pamela</title>
-<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   background-color:#1F1515;
   color:#fff;
-  font-family:Arial,sans-serif;
+  font-family:'Roboto',sans-serif;
   overflow-y:auto;
   scroll-behavior:smooth;
   padding:20px;
-  cursor:none;
   transition: background 1s,color 1s;
 }
 .container{
@@ -26,12 +25,12 @@ body{
 h1,p{
   opacity:0;
   transform:translateY(20px);
-  transition:opacity 1s,transform 1s,text-shadow 0.5s,color 1s;
+  transition:opacity 1s,transform 1s,text-shadow 0.2s,color 0.5s;
 }
 h1{
   font-size:3em;
   color:#FF6B6B;
-  font-family:'MedievalSharp',cursive;
+  font-weight:700;
   margin-bottom:20px;
 }
 p{
@@ -52,14 +51,9 @@ p{
   position:absolute;
   font-size:20px;
   color:#FF6B6B;
-  animation:floatUp linear forwards;
   pointer-events:none;
   z-index:5;
-  text-shadow:0 0 8px #FF6B6B;
-}
-@keyframes floatUp{
-  0%{transform:translateY(0) scale(1);opacity:1;}
-  100%{transform:translateY(-100vh) scale(1.5);opacity:0;}
+  text-shadow:0 0 10px #FF6B6B;
 }
 .particle{
   position:absolute;
@@ -67,12 +61,7 @@ p{
   height:5px;
   border-radius:50%;
   opacity:0.2;
-  animation:moveParticle linear infinite;
-}
-@keyframes moveParticle{
-  0%{transform:translateY(0) translateX(0);opacity:0.2;}
-  50%{opacity:0.5;}
-  100%{transform:translateY(-100vh) translateX(20px);opacity:0;}
+  pointer-events:none;
 }
 .buttons{
   position:fixed;
@@ -133,75 +122,80 @@ p{
 </audio>
 
 <script>
-const music=document.getElementById('music');
-const playBtn=document.getElementById('playPause');
-const themeBtn=document.getElementById('themeSwitch');
-let darkTheme=true;
+// Elementos principais
+const music = document.getElementById('music');
+const playBtn = document.getElementById('playPause');
+const themeBtn = document.getElementById('themeSwitch');
+let darkTheme = true;
 
-// play/pause
-playBtn.addEventListener('click',()=>{
-  if(music.paused){music.play();playBtn.textContent='⏸️';}
-  else{music.pause();playBtn.textContent='🎵';}
+// Função para iniciar música (PC e mobile)
+function startMusic() {
+  music.play().catch(() => console.log('Toque no botão para iniciar a música'));
+  playBtn.textContent = '⏸️';
+}
+
+// Play/pause
+playBtn.addEventListener('click', () => {
+  if (music.paused) startMusic();
+  else { music.pause(); playBtn.textContent='🎵'; }
 });
 
-// tema escuro/claro
+// Primeiro toque no mobile inicia música
+document.addEventListener('touchstart',()=>{if(music.paused) startMusic();},{once:true});
+
+// Troca de tema
 themeBtn.addEventListener('click',()=>{
   if(darkTheme){
     document.body.style.backgroundColor='#FFE4E1';
     document.body.style.color='#1F1515';
     darkTheme=false;
-  }else{
+  } else{
     document.body.style.backgroundColor='#1F1515';
     document.body.style.color='#FFFFFF';
     darkTheme=true;
   }
 });
 
-// parágrafos aparecem e brilham
-const elements=document.querySelectorAll('.container h1,.container p');
+// Parágrafos aparecem e brilham
+const elements = document.querySelectorAll('.container h1,.container p');
 let delay=700;
 elements.forEach((el,index)=>{
   setTimeout(()=>{
     el.style.opacity=1;
     el.style.transform='translateY(0)';
-    setInterval(()=>{
-      const intensity=Math.random()*8+4;
-      el.style.textShadow=`0 0 ${intensity}px #FF6B6B`;
-    },500);
   },delay*index);
 });
 
-// corações seguem mouse ou toque
-function spawnHeart(x,y){
-  const heart=document.createElement('div');
+// Corações "explosivos" conforme a música
+function spawnHeart(x,y,size){
+  const heart = document.createElement('div');
   heart.classList.add('floating-heart');
   heart.innerText='❤️';
-  heart.style.left=x+(Math.random()*30-15)+'px';
-  heart.style.top=y+(Math.random()*30-15)+'px';
-  heart.style.fontSize=Math.random()*30+15+'px';
-  heart.style.animationDuration=(Math.random()*3+2)+'s';
+  heart.style.left = x + (Math.random()*50-25) + 'px';
+  heart.style.top = y + (Math.random()*50-25) + 'px';
+  heart.style.fontSize = size + 'px';
+  heart.style.animationDuration = (Math.random()*1.5 + 0.5)+'s';
+  heart.style.opacity = Math.random()*0.8+0.2;
   document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),4000);
+  setTimeout(()=>heart.remove(),2000);
 }
-document.addEventListener('mousemove',(e)=>spawnHeart(e.clientX,e.clientY));
-document.addEventListener('touchmove',(e)=>spawnHeart(e.touches[0].clientX,e.touches[0].clientY));
+document.addEventListener('mousemove', e=>spawnHeart(e.clientX,e.clientY,30+Math.random()*30));
+document.addEventListener('touchmove', e=>spawnHeart(e.touches[0].clientX,e.touches[0].clientY,30+Math.random()*30));
 
-// partículas
+// Partículas "explosivas"
 const particles=[];
-for(let i=0;i<80;i++){
-  const particle=document.createElement('div');
-  particle.classList.add('particle');
-  particle.style.left=Math.random()*window.innerWidth+'px';
-  particle.style.top=Math.random()*window.innerHeight+'px';
-  particle.style.width=Math.random()*4+2+'px';
-  particle.style.height=particle.style.width;
-  document.body.appendChild(particle);
-  particles.push(particle);
+for(let i=0;i<150;i++){
+  const p = document.createElement('div');
+  p.classList.add('particle');
+  p.style.left = Math.random()*window.innerWidth+'px';
+  p.style.top = Math.random()*window.innerHeight+'px';
+  document.body.appendChild(p);
+  particles.push(p);
 }
 
 // Web Audio API
-const audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-const analyser=audioCtx.createAnalyser();
+const audioCtx = new(window.AudioContext||window.webkitAudioContext)();
+const analyser = audioCtx.createAnalyser();
 let source;
 
 music.addEventListener('play',()=>{
@@ -209,34 +203,41 @@ music.addEventListener('play',()=>{
     source=audioCtx.createMediaElementSource(music);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
-    analyser.fftSize=128; // mais preciso
+    analyser.fftSize=128;
   }
 });
 
 function animate(){
   requestAnimationFrame(animate);
   if(!music.paused){
-    const dataArray=new Uint8Array(analyser.frequencyBinCount);
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(dataArray);
-    const avg=dataArray.reduce((a,b)=>a+b)/dataArray.length;
+    const avg = dataArray.reduce((a,b)=>a+b)/dataArray.length;
+    const hue = Math.floor(avg*2);
 
-    // fundo e cor dinâmica
-    const hue=Math.floor(avg*2);
-    document.body.style.backgroundColor=darkTheme?`hsl(${hue},40%,12%)`:`hsl(${hue},40%,90%)`;
+    // Fundo dinâmico
+    document.body.style.backgroundColor = darkTheme ? `hsl(${hue},40%,12%)`:`hsl(${hue},40%,90%)`;
 
-    // partículas
-    particles.forEach(p=>{
-      const size=Math.random()*4 + avg/50;
-      p.style.width=size+'px';
-      p.style.height=size+'px';
-      p.style.backgroundColor=`hsl(${hue},70%,60%)`;
-      p.style.opacity=Math.random()*0.6 + 0.2;
-    });
-
-    // brilho do texto
+    // Texto vibra e brilha intensamente
     elements.forEach(el=>{
-      el.style.textShadow=`0 0 ${avg/2}px #FF6B6B`;
+      el.style.textShadow = `0 0 ${avg/1.5}px #FF6B6B`;
+      el.style.transform = `translateY(${Math.sin(Date.now()/50)*avg/40}px)`;
     });
+
+    // Partículas pulando e espalhando
+    particles.forEach(p=>{
+      const size = Math.random()*4 + avg/50;
+      p.style.width = size+'px';
+      p.style.height = size+'px';
+      p.style.backgroundColor = `hsl(${hue},70%,60%)`;
+      p.style.opacity = Math.random()*0.6+0.2;
+      p.style.transform = `translateY(${Math.sin(Date.now()/50)*avg/30}px) translateX(${Math.sin(Date.now()/70)*avg/50}px)`;
+    });
+
+    // Spawn de corações explosivos conforme batida
+    if(avg>100 && Math.random()<0.3){
+      spawnHeart(Math.random()*window.innerWidth, Math.random()*window.innerHeight, 40+Math.random()*40);
+    }
   }
 }
 animate();
